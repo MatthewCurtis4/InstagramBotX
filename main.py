@@ -27,9 +27,38 @@ class InstagramBot:
             .send_keys(password)      
         click_login = self.driver.find_element_by_xpath('//button[@type="submit"]').click()   
         sleep(5) #got to sleep so we can make sure it has time to work before it closes
-        click_login = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
-        sleep(4)  
+        save_info_bypass = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
+        sleep(2)  
+        noti_bypass = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
+        sleep(3)
+
+
+    def get_unfollowers(self):
+        #click on username to get to our account
+        #if screen gets to a certain width this title disapears and function wont work
+        self.driver.find_element_by_xpath("//a[contains(@href,'/{}/')]".format(self.username))\
+            .click()
+            
+  
+        #self.driver.find_element_by_xpath("//a[contains(@href")
+
+
+
+
+Bot = InstagramBot("testeraccount41014", "Qmwe321")
+#run python3 -i main.py to open interactive controls where selenium web page stays open
+# and you can call your methods to test it
+#or can just run something like bot get_unfollowers() here
+#Bot.get_unfollowers()
+
+
+
+
 '''
+
+NOTES FOR FINDING ELEMENTS ON PAGE
+
+
 self.driver.find_element_by_xpath('/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[3]').click
  example of clicking on page 
 to find elements on page that you want bot to click, highlight element you want and inspect element the page.
@@ -38,11 +67,3 @@ use x path to find a string of text and identify object
 right click, copy, the click copy full x path
 or you can learn queries and can do something like //a[contains(text(), 'Log in')]
 '''
-
-    def get_unfollowers(self):
-        #click on username to get to our account
-        self.driver.find_element_by_xpath("//a[contains(@href.'/{}')]".format(self.username))\
-            .click()
-
-
-Bot = InstagramBot("Testeraccount41014", "Qmwe321")
