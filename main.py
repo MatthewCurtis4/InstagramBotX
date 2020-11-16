@@ -16,7 +16,7 @@ PASSWORD = os.environ.get('pw')
 
 class InstagramBot:
     def __init__(self, username, password):
-
+        self.username = username
         self.driver = webdriver.Chrome(executable_path=r'/mnt/c/Users/mcurt/Downloads/chromedriver.exe')
         self.driver.get("https://www.instagram.com/accounts/login/?source=auth_switcher")
         sleep(3)
@@ -26,7 +26,9 @@ class InstagramBot:
         password_field = self.driver.find_element_by_xpath("//input[@name=\"password\"]")\
             .send_keys(password)      
         click_login = self.driver.find_element_by_xpath('//button[@type="submit"]').click()   
-        sleep(5)
+        sleep(5) #got to sleep so we can make sure it has time to work before it closes
+        click_login = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
+        sleep(4)  
 '''
 self.driver.find_element_by_xpath('/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[3]').click
  example of clicking on page 
@@ -36,4 +38,10 @@ use x path to find a string of text and identify object
 right click, copy, the click copy full x path
 or you can learn queries and can do something like //a[contains(text(), 'Log in')]
 '''
-InstagramBot("Testeraccount41014", "Qmwe321")
+
+    def get_unfollowers(self):
+        
+
+
+
+Bot = InstagramBot("Testeraccount41014", "Qmwe321")
