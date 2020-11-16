@@ -38,18 +38,47 @@ class InstagramBot:
         #if screen gets to a certain width this title disapears and function wont work
         self.driver.find_element_by_xpath("//a[contains(@href,'/{}/')]".format(self.username))\
             .click()
-            
-  
-        #self.driver.find_element_by_xpath("//a[contains(@href")
+        sleep(1)
+        #open following list
+        self.driver.find_element_by_xpath("//a[contains(@href,'/following')]")\
+            .click()
+        
+        #select where suggested for you pops up at bottom of following if you scroll to fast
+        suggestions = self.driver.find_element_by_xpath('//h4[contains(text(), Suggestions)]')
+        #running java script through selenium. First part is java script, second is the elemnt
+        self.driver.execute_script('arguments[0].scrollIntoView()', suggestions)
+        sleep(1)
+
+        #define what scroll box is. had to use x path, could not find better identifier
+        scroll_box = self.driver.find_element_by_xpath("/html/body/div[5]/div/div/div[2]")
+
+        # make function so it scrolls until at bottom. Compare if height of box is greater after
+        #you try to scroll. If so you are not at max and keep going
+        final_ht, height = 0, 1
+        while final_ht != height:
+            final_ht = height
+            sleep(1)
+            #scroll to bottom of scroll box and then return its height
+            height = self.driver.execute_script("""
+                arguments[0].scrollTo(0, arguments[0].scrollHeight); 
+                return arguments[0].scrollHeight;
+                """, scroll_box)
+
+        #self.driver.find_element_by_xpath("//a[contains(@href,'/followers')]")\
+        #    .click()
+        #followers = self._get_names()
+        #not_following_back = [user for user in following if user not in followers]
+        #print(not_following_back)
 
 
 
 
-Bot = InstagramBot("testeraccount41014", "Qmwe321")
+
+Bot = InstagramBot('testeraccount41014', 'Qmwe321')
 #run python3 -i main.py to open interactive controls where selenium web page stays open
 # and you can call your methods to test it
 #or can just run something like bot get_unfollowers() here
-#Bot.get_unfollowers()
+Bot.get_unfollowers()
 
 
 
