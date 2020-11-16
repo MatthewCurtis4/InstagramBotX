@@ -42,7 +42,18 @@ class InstagramBot:
         #open following list
         self.driver.find_element_by_xpath("//a[contains(@href,'/following')]")\
             .click()
-        
+        following = self.retreive_name_list();
+
+        #open followers list
+        self.driver.find_element_by_xpath("//a[contains(@href,'/followers')]")\
+            .click()
+
+        followers = self.retreive_name_list();
+        not_following_back = [user for user in following if user not in followers]
+        print(not_following_back)     
+
+    def retreive_name_list(self):
+       
         #select where suggested for you pops up at bottom of following if you scroll to fast
         suggestions = self.driver.find_element_by_xpath('//h4[contains(text(), Suggestions)]')
         #running java script through selenium. First part is java script, second is the elemnt
@@ -71,10 +82,7 @@ class InstagramBot:
         # close button
         self.driver.find_element_by_xpath("/html/body/div[5]/div/div/div[1]/div/div[2]/button")\
             .click()
-        print (names)
-
-
-
+        return names
         #self.driver.find_element_by_xpath("//a[contains(@href,'/followers')]")\
         #    .click()
         #followers = self._get_names()
