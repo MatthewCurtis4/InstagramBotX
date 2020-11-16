@@ -64,6 +64,17 @@ class InstagramBot:
                 return arguments[0].scrollHeight;
                 """, scroll_box)
 
+        #each name is a link on the following list so create a python list of all accounts
+        links = scroll_box.find_elements_by_tag_name('a')
+        #get text out of links
+        names = [name.text for name in links if name.text != '']
+        # close button
+        self.driver.find_element_by_xpath("/html/body/div[5]/div/div/div[1]/div/div[2]/button")\
+            .click()
+        print (names)
+
+
+
         #self.driver.find_element_by_xpath("//a[contains(@href,'/followers')]")\
         #    .click()
         #followers = self._get_names()
