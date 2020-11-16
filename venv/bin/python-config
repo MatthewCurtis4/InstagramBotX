@@ -1,4 +1,4 @@
-#!/mnt/c/Users/mcurt/Documents/InstagramApp/venv/bin/python
+#!/mnt/c/Users/mcurt/Documents/InstagramBotX/venv/bin/python
 
 import sys
 import getopt
