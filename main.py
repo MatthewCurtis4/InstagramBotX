@@ -40,11 +40,13 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 
 
 class InstagramBot:
-    def __init__(self):
-
+    def __init__(self, username, password):
+        self.username = webdriver.find_element_by_name('username')
         self.driver = webdriver.Chrome(executable_path=r'/mnt/c/Users/mcurt/Downloads/chromedriver.exe')
-        self.driver.get("https://www.instagram.com")
-        sleep(20)
+        self.driver.get("https://www.instagram.com/accounts/login/?source=auth_switcher")
+        sleep(3)
+        
+    def static login(self):
 
 
 InstagramBot()
