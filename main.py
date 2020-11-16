@@ -6,48 +6,34 @@ from selenium.webdriver.chrome.options import Options
 from time import sleep
 
 '''
-user_name = 'Username'
-password = 'Password'
-
-os.chmod('/mnt/c/Users/mcurt/Downloads/chromedriver.exe', 755)
-driver = webdriver.Chrome(executable_path=r'/mnt/c/Users/mcurt/Downloads/chromedriver.exe')
-driver.get("https://www.facebook.com")
-
-element = driver.find_element_by_id("email")
-element.send_keys(user_name)
-
-element = driver.find_element_by_id("pass")
-element.send_keys(password)
-
-element.send_keys(Keys.RETURN)
-
-driver.close()
+make an .env file that stores your username and password
+if you want to call bot without using .env file. Just call bot
+ with InstagramBot('your username here', 'your password here')
+ instead of InstagramBot(USER, PASSWORD)
 '''
-
-'''
-Setting up Chrome options for use - necessary for chrome to be used in Repl.it
-'''
-
-chrome_options = Options()
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
-
-
-
-
-
-
-
+USER = os.getenv('username')
+PASSWORD = os.environ.get('pw')
 
 class InstagramBot:
     def __init__(self, username, password):
-        self.username = webdriver.find_element_by_name('username')
+
         self.driver = webdriver.Chrome(executable_path=r'/mnt/c/Users/mcurt/Downloads/chromedriver.exe')
         self.driver.get("https://www.instagram.com/accounts/login/?source=auth_switcher")
         sleep(3)
-        
-    def static login(self):
-
-
-InstagramBot()
-
+        #in general, to find path just look for a unique identify you can use in inspect html
+        username_field = self.driver.find_element_by_xpath("//input[@name=\"username\"]")\
+            .send_keys(username)
+        password_field = self.driver.find_element_by_xpath("//input[@name=\"password\"]")\
+            .send_keys(password)      
+        click_login = self.driver.find_element_by_xpath('//button[@type="submit"]').click()   
+        sleep(5)
+'''
+self.driver.find_element_by_xpath('/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[3]').click
+ example of clicking on page 
+to find elements on page that you want bot to click, highlight element you want and inspect element the page.
+the html will come up with html highlighted of what you had highlighted
+use x path to find a string of text and identify object
+right click, copy, the click copy full x path
+or you can learn queries and can do something like //a[contains(text(), 'Log in')]
+'''
+InstagramBot("Testeraccount41014", "Qmwe321")
