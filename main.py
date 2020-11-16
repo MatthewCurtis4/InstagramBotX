@@ -40,8 +40,9 @@ or you can learn queries and can do something like //a[contains(text(), 'Log in'
 '''
 
     def get_unfollowers(self):
-        
-
+        #click on username to get to our account
+        self.driver.find_element_by_xpath("//a[contains(@href.'/{}')]".format(self.username))\
+            .click()
 
 
 Bot = InstagramBot("Testeraccount41014", "Qmwe321")
