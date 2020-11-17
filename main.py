@@ -57,7 +57,7 @@ class InstagramBot:
     def find_tags(self):
         sleep(3) #sleep to buffer the page loading
 
-        hashtag_list = ['UndergroundRap', 'UpNext', 'TorontoRap', 'newyorkunderground']  #list of hashtags to use when searching through insta
+        hashtag_list = ['UndergroundRap']  #list of hashtags to use when searching through insta
         new_followed = []  #keeps track of the newly followed accounts
         followed = 0  #keeps track of the number of followed
         '''
@@ -73,12 +73,15 @@ class InstagramBot:
                 #.click()
 
         TOP_THUMBNAIL_XPATH = '//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a'
+        NEWEST_THUMBNAIL_XPATH = '//*[@id="react-root"]/section/main/article/div[2]/div/div[1]/div[1]/a'
 
         top_thumbnail = self.driver.find_element_by_xpath(TOP_THUMBNAIL_XPATH)
+        newest_top_thumbnail = self.driver.find_element_by_xpath(NEWEST_THUMBNAIL_XPATH)
 
+        #uncomment whichever you wanna use below
+        
         top_thumbnail.click()
-
-
+        #newest_top_thumbnail.click()
 
     def retreive_name_list(self):
        
@@ -128,7 +131,7 @@ Bot = InstagramBot('testeraccount41014', 'Qmwe321')
 
 
 #Bot.get_unfollowers()
-
+Bot.find_tags()
 
 
 
