@@ -87,7 +87,7 @@ class InstagramBot:
             sleep(randint(1, 2))
 
             #try:
-            for posts in range(1, 15):
+            for posts in range(1, 4):
                 print("TEST1")
                 '''
                 Loop through the posts of the explore page based on the hashtag
@@ -96,11 +96,10 @@ class InstagramBot:
                 '''
 
                 LIKE_BUTTON = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
-                USERNAME_XPATH = '                /html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[1]/span/a'
-                username_text = self.driver.find_element_by_xpath(USERNAME_XPATH).get_attribute("innerHTML")
+                USERNAME_XPATH = '/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[1]/span/a'
+                username_text = (self.driver.find_element_by_xpath(USERNAME_XPATH)).get_attribute("innerHTML")
                 likeButton = self.driver.find_element_by_xpath(LIKE_BUTTON)
                 followButton = self.driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')
-
                     #checks to see if the follow button let's you hit follow
                 if followButton.get_attribute("innerHTML") == 'Follow':
                     sleep(1)
@@ -111,13 +110,15 @@ class InstagramBot:
                         [username_text, tag])
                         followed += 1
                     except:
-                        self.driver.find_element_by_xpath('//a[contains(text(), Next)]')\
-                        .click()
+                        #self.driver.find_element_by_xpath('//a[contains(text(), Next)]')\
+                        #.click()
+                        self.driver.find_element_by_link_text('Next').click()
                         sleep(randint(5, 10))
 
                     # clicks on the right arrow to the right of the thumbnail to go to next picture
-                self.driver.find_element_by_xpath('//a[contains(text(), Next)]')\
-                .click()
+                #self.driver.find_element_by_xpath('//a[contains(text(), Next)]')\
+                #.click()
+                self.driver.find_element_by_link_text('Next').click()
                 sleep(randint(5, 10))
 
         #except:
