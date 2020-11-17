@@ -52,6 +52,14 @@ class InstagramBot:
         not_following_back = [user for user in following if user not in followers]
         print(not_following_back)     
 
+
+    def find_tags(self):
+        self.driver.find_element_by_xpath("//a[contains(@placeholder,'Search')]")\
+            .click()
+        following = self.retreive_name_list();    
+
+
+
     def retreive_name_list(self):
        
         #select where suggested for you pops up at bottom of following if you scroll to fast
@@ -97,7 +105,9 @@ Bot = InstagramBot('testeraccount41014', 'Qmwe321')
 #run python3 -i main.py to open interactive controls where selenium web page stays open
 # and you can call your methods to test it
 #or can just run something like bot get_unfollowers() here
-Bot.get_unfollowers()
+
+
+#Bot.get_unfollowers()
 
 
 
