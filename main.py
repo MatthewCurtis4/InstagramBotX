@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from time import sleep
+import random
 
 '''
 make an .env file that stores your username and password
@@ -54,9 +55,28 @@ class InstagramBot:
 
 
     def find_tags(self):
-        self.driver.find_element_by_xpath("//a[contains(@placeholder,'Search')]")\
-            .click()
-        following = self.retreive_name_list();    
+        sleep(3) #sleep to buffer the page loading
+
+        hashtag_list = ['UndergroundRap', 'UpNext', 'TorontoRap', 'newyorkunderground']  #list of hashtags to use when searching through insta
+        new_followed = []  #keeps track of the newly followed accounts
+        followed = 0  #keeps track of the number of followed
+        '''
+        Loop through hashtag list for search material
+        '''
+        for tag in hashtag_list:
+            print("IN HASHTAG ARRAY")
+            self.driver.get(
+                'https://www.instagram.com/explore/tags/' + tag +
+                '/')  #pulls the URL for the search using one of the hastags
+            sleep(5)
+            #self.driver.find_element_by_xpath('/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input')\
+                #.click()
+
+        TOP_THUMBNAIL_XPATH = '//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a'
+
+        top_thumbnail = self.driver.find_element_by_xpath(TOP_THUMBNAIL_XPATH)
+
+        top_thumbnail.click()
 
 
 
