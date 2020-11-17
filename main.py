@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from time import sleep
 import random
+import csv
 
 '''
 make an .env file that stores your username and password
@@ -29,9 +30,9 @@ class InstagramBot:
         click_login = self.driver.find_element_by_xpath('//button[@type="submit"]').click()   
         sleep(3) #got to sleep so we can make sure it has time to work before it closes
         save_info_bypass = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
-        sleep(1)  
+        sleep(2)  
         noti_bypass = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
-        sleep(1)
+        sleep(2)
 
 
     def get_unfollowers(self):
@@ -72,24 +73,97 @@ class InstagramBot:
             #self.driver.find_element_by_xpath('/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input')\
                 #.click()
 
-        TOP_THUMBNAIL_XPATH = '//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a'
-        NEWEST_THUMBNAIL_XPATH = '//*[@id="react-root"]/section/main/article/div[2]/div/div[1]/div[1]/a'
+            TOP_THUMBNAIL_XPATH = '//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a'
+            NEWEST_THUMBNAIL_XPATH = '//*[@id="react-root"]/section/main/article/div[2]/div/div[1]/div[1]/a'
 
-        top_thumbnail = self.driver.find_element_by_xpath(TOP_THUMBNAIL_XPATH)
-        newest_top_thumbnail = self.driver.find_element_by_xpath(NEWEST_THUMBNAIL_XPATH)
+            top_thumbnail = self.driver.find_element_by_xpath(TOP_THUMBNAIL_XPATH)
+            newest_top_thumbnail = self.driver.find_element_by_xpath(NEWEST_THUMBNAIL_XPATH)
 
-        #uncomment whichever you wanna use below
-        
-        top_thumbnail.click()
-        #newest_top_thumbnail.click()
+            #uncomment whichever you wanna use below
+            
+            top_thumbnail.click()
+            #newest_top_thumbnail.click()
+            new_followed = []  #keeps track of the newly followed accounts
+            followed = 0  #keeps track of the number of followed
+            #remember to sleep so it has time to load
+            sleep(2)
 
-    def followbot(self):
-        self.find_tags()
+            try:
+                for posts in range(1, 15):
+                    print("TEST1")
+                    '''
+                    Loop through the posts of the explore page based on the hashtag
+                    -Find follow button, check that follow option is available
+                    -click the "next" button to go to the next post
+                    '''
 
-        #remember to sleep so it has time to load
-        sleep(1)
-        self.driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')\
-            .click()
+                    LIKE_BUTTON = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
+                    USERNAME_XPATH = '/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[1]/span/a'
+                    username_text = self.driver.find_element_by_xpath(USERNAME_XPATH).get_attribute("innerHTML")
+                    likeButton = self.driver.find_element_by_xpath(LIKE_BUTTON)
+                    followButton = self.driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')
+                        #checks to see if the follow button let's you hit follow
+                if followButton.get_attribute("innerHTML") == 'Follow':
+                    try:
+                        followButton.click()
+                        likeButton.click()
+                        new_followed.append(
+                        [username_text, tag])
+                        followed += 1
+                    except:
+                        self.driver.find_element_by_link_text('Next').click()
+                        sleep(6)
+
+                        # clicks on the right arrow to the right of the thumbnail to go to next picture
+                self.driver.find_element_by_link_text('Next').click()
+                sleep(6)
+
+            except:
+                print("Something failed in try")
+                sleep(3)
+
+        def followbot(self):
+            self.find_tags()
+            new_followed = []  #keeps track of the newly followed accounts
+            followed = 0  #keeps track of the number of followed
+            #remember to sleep so it has time to load
+            sleep(2)
+
+        try:
+            for posts in range(1, 5):
+                print("TEST1")
+                '''
+                Loop through the posts of the explore page based on the hashtag
+                -Find follow button, check that follow option is available
+                -click the "next" button to go to the next post
+                '''
+
+
+                LIKE_BUTTON = '/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button'
+                USERNAME_XPATH = '/html/body/div[4]/div[2]/div/article/header/div[2]/div[1]/div[1]/span/a'
+                username_text = webdriver.find_element_by_xpath(USERNAME_XPATH).get_attribute("innerHTML")
+                likeButton = webdriver.find_element_by_xpath(LIKE_BUTTON)
+                followButton = webdriver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')
+                    #checks to see if the follow button let's you hit follow
+            if followButton.get_attribute("innerHTML") == 'Follow':
+                try:
+                    followButton.click()
+                    likeButton.click()
+                    new_followed.append(
+                    [username_text, tag])
+                    followed += 1
+                except:
+                    webdriver.find_element_by_link_text('Next').click()
+                    sleep(6)
+
+                    # clicks on the right arrow to the right of the thumbnail to go to next picture
+            webdriver.find_element_by_link_text('Next').click()
+            sleep(6)
+
+        except:
+            print("Something failed in try")
+
+
 
     def retreive_name_list(self):
        
@@ -140,7 +214,8 @@ Bot = InstagramBot('testeraccount41014', 'Qmwe321')
 
 #Bot.get_unfollowers()
 
-Bot.followbot()
+Bot.find_tags()
+#Bot.followbot()
 
 
 '''
