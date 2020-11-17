@@ -4,9 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from time import sleep
-import random
+from random import randint
 import csv
-
 '''
 make an .env file that stores your username and password
 if you want to call bot without using .env file. Just call bot
@@ -69,7 +68,7 @@ class InstagramBot:
             self.driver.get(
                 'https://www.instagram.com/explore/tags/' + tag +
                 '/')  #pulls the URL for the search using one of the hastags
-            sleep(3)
+            sleep(5)
             #self.driver.find_element_by_xpath('/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input')\
                 #.click()
 
@@ -78,7 +77,10 @@ class InstagramBot:
 
             top_thumbnail = self.driver.find_element_by_xpath(TOP_THUMBNAIL_XPATH)
             newest_top_thumbnail = self.driver.find_element_by_xpath(NEWEST_THUMBNAIL_XPATH)
-
+        self.driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')\
+            .click()
+        self.driver.find_element_by_xpath('//a[contains(text(), Next)]')\
+            .click()
             #uncomment whichever you wanna use below
             
             top_thumbnail.click()
@@ -111,11 +113,13 @@ class InstagramBot:
                         [username_text, tag])
                         followed += 1
                     except:
-                        self.driver.find_element_by_link_text('Next').click()
+                        self.driver.find_element_by_xpath('//a[contains(text(), Next)]')\
+                        .click()
                         sleep(6)
 
                         # clicks on the right arrow to the right of the thumbnail to go to next picture
-                self.driver.find_element_by_link_text('Next').click()
+                self.driver.find_element_by_xpath('//a[contains(text(), Next)]')\
+                .click()
                 sleep(6)
 
             except:
@@ -128,7 +132,7 @@ class InstagramBot:
             followed = 0  #keeps track of the number of followed
             #remember to sleep so it has time to load
             sleep(2)
-
+        sleep(randint(1, 2))
         try:
             for posts in range(1, 5):
                 print("TEST1")
@@ -145,25 +149,27 @@ class InstagramBot:
                 likeButton = webdriver.find_element_by_xpath(LIKE_BUTTON)
                 followButton = webdriver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')
                     #checks to see if the follow button let's you hit follow
-            if followButton.get_attribute("innerHTML") == 'Follow':
-                try:
-                    followButton.click()
-                    likeButton.click()
-                    new_followed.append(
-                    [username_text, tag])
-                    followed += 1
-                except:
-                    webdriver.find_element_by_link_text('Next').click()
-                    sleep(6)
+                if followButton.get_attribute("innerHTML") == 'Follow':
+                    try:
+                        followButton.click()
+                        likeButton.click()
+                        new_followed.append(
+                        [username_text, tag])
+                        followed += 1
+                    except:
+                        webdriver.find_element_by_link_text('Next').click()
+                        sleep(randint(5, 10))
 
-                    # clicks on the right arrow to the right of the thumbnail to go to next picture
-            webdriver.find_element_by_link_text('Next').click()
-            sleep(6)
+                        # clicks on the right arrow to the right of the thumbnail to go to next picture
+                webdriver.find_element_by_link_text('Next').click()
+                sleep(randint(5, 10))
 
         except:
             print("Something failed in try")
 
-
+        with open('NEW_FOLLOWER_LIST.csv', 'w') as csvFile:
+            writer = csv.writer(csvFile)
+            writer.writerows(new_followed)
 
     def retreive_name_list(self):
        
