@@ -20,18 +20,18 @@ class InstagramBot:
         self.username = username
         self.driver = webdriver.Chrome(executable_path=r'/mnt/c/Users/mcurt/Downloads/chromedriver.exe')
         self.driver.get("https://www.instagram.com/accounts/login/?source=auth_switcher")
-        sleep(3)
+        sleep(2)
         #in general, to find path just look for a unique identify you can use in inspect html
         username_field = self.driver.find_element_by_xpath("//input[@name=\"username\"]")\
             .send_keys(username)
         password_field = self.driver.find_element_by_xpath("//input[@name=\"password\"]")\
             .send_keys(password)      
         click_login = self.driver.find_element_by_xpath('//button[@type="submit"]').click()   
-        sleep(5) #got to sleep so we can make sure it has time to work before it closes
+        sleep(3) #got to sleep so we can make sure it has time to work before it closes
         save_info_bypass = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
-        sleep(2)  
+        sleep(1)  
         noti_bypass = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
-        sleep(3)
+        sleep(1)
 
 
     def get_unfollowers(self):
@@ -55,7 +55,7 @@ class InstagramBot:
 
 
     def find_tags(self):
-        sleep(3) #sleep to buffer the page loading
+        sleep(2) #sleep to buffer the page loading
 
         hashtag_list = ['UndergroundRap']  #list of hashtags to use when searching through insta
         new_followed = []  #keeps track of the newly followed accounts
@@ -68,7 +68,7 @@ class InstagramBot:
             self.driver.get(
                 'https://www.instagram.com/explore/tags/' + tag +
                 '/')  #pulls the URL for the search using one of the hastags
-            sleep(5)
+            sleep(3)
             #self.driver.find_element_by_xpath('/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input')\
                 #.click()
 
@@ -82,6 +82,14 @@ class InstagramBot:
         
         top_thumbnail.click()
         #newest_top_thumbnail.click()
+
+    def followbot(self):
+        self.find_tags()
+
+        #remember to sleep so it has time to load
+        sleep(1)
+        self.driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')\
+            .click()
 
     def retreive_name_list(self):
        
@@ -131,8 +139,8 @@ Bot = InstagramBot('testeraccount41014', 'Qmwe321')
 
 
 #Bot.get_unfollowers()
-Bot.find_tags()
 
+Bot.followbot()
 
 
 '''
