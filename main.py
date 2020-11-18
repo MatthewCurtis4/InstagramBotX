@@ -6,14 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from time import sleep
 from random import randint
 import csv
-'''
-make an .env file that stores your username and password
-if you want to call bot without using .env file. Just call bot
- with InstagramBot('your username here', 'your password here')
- instead of InstagramBot(USER, PASSWORD)
-'''
-USER = os.getenv('username')
-PASSWORD = os.environ.get('pw')
+
 
 class InstagramBot:
     def __init__(self, username, password):
@@ -57,14 +50,14 @@ class InstagramBot:
     def find_tags(self):
         sleep(2) #sleep to buffer the page loading
 
-        hashtag_list = ['UndergroundRap']  #list of hashtags to use when searching through insta
+        hashtag_list = ['UndergroundHipHop', 'torontorap']  #list of hashtags to use when searching through insta
         new_followed = []  #keeps track of the newly followed accounts
         followed = 0  #keeps track of the number of followed
         '''
         Loop through hashtag list for search material
         '''
         for tag in hashtag_list:
-            print("IN HASHTAG ARRAY")
+            print("USERS IN HASHTAG ARRAY")
             self.driver.get(
                 'https://www.instagram.com/explore/tags/' + tag +
                 '/')  #pulls the URL for the search using one of the hastags
@@ -86,15 +79,15 @@ class InstagramBot:
             #remember to sleep so it has time to load
             sleep(randint(1, 2))
 
-            #try:
+            #change range for how many people you want to follow
             for posts in range(1, 4):
-                print("TEST1")
+                print("Following User")
                 '''
                 Loop through the posts of the explore page based on the hashtag
                 -Find follow button, check that follow option is available
                 -click the "next" button to go to the next post
                 '''
-
+                
                 LIKE_BUTTON = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
                 USERNAME_XPATH = '/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[1]/span/a'
                 username_text = (self.driver.find_element_by_xpath(USERNAME_XPATH)).get_attribute("innerHTML")
@@ -116,14 +109,9 @@ class InstagramBot:
                         sleep(randint(5, 10))
 
                     # clicks on the right arrow to the right of the thumbnail to go to next picture
-                #self.driver.find_element_by_xpath('//a[contains(text(), Next)]')\
-                #.click()
                 self.driver.find_element_by_link_text('Next').click()
                 sleep(randint(5, 10))
 
-        #except:
-        #    print("Something failed in try")
-        #    sleep(3)
 
 
         with open('NEW_FOLLOWER_LIST.csv', 'w') as csvFile:
@@ -161,17 +149,12 @@ class InstagramBot:
         self.driver.find_element_by_xpath("/html/body/div[5]/div/div/div[1]/div/div[2]/button")\
             .click()
         return names
-        #self.driver.find_element_by_xpath("//a[contains(@href,'/followers')]")\
-        #    .click()
-        #followers = self._get_names()
-        #not_following_back = [user for user in following if user not in followers]
-        #print(not_following_back)
-
 
 
 
 
 Bot = InstagramBot('testeraccount41014', 'Qmwe321')
+#Bot = InstagramBot('Your Username', 'Your Password')
 #run python3 -i main.py to open interactive controls where selenium web page stays open
 # and you can call your methods to test it
 #or can just run something like bot get_unfollowers() here
