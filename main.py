@@ -50,7 +50,7 @@ class InstagramBot:
     def find_tags(self):
         sleep(2) #sleep to buffer the page loading
 
-        hashtag_list = ['UndergroundHipHop', 'torontorap']  #list of hashtags to use when searching through insta
+        hashtag_list = ['UndergroundRap', 'torontorap']  #list of hashtags to use when searching through insta
         new_followed = []  #keeps track of the newly followed accounts
         followed = 0  #keeps track of the number of followed
         '''
@@ -87,7 +87,7 @@ class InstagramBot:
                 -Find follow button, check that follow option is available
                 -click the "next" button to go to the next post
                 '''
-                
+                sleep(2)
                 LIKE_BUTTON = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
                 USERNAME_XPATH = '/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[1]/span/a'
                 username_text = (self.driver.find_element_by_xpath(USERNAME_XPATH)).get_attribute("innerHTML")
@@ -152,9 +152,7 @@ class InstagramBot:
 
 
 
-
-Bot = InstagramBot('testeraccount41014', 'Qmwe321')
-#Bot = InstagramBot('Your Username', 'Your Password')
+Bot = InstagramBot('Your Username', 'Your Password')
 #run python3 -i main.py to open interactive controls where selenium web page stays open
 # and you can call your methods to test it
 #or can just run something like bot get_unfollowers() here
