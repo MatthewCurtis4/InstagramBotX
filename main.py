@@ -90,7 +90,8 @@ class InstagramBot:
                 sleep(2)
                 LIKE_BUTTON = '/html/body/div[5]/div[2]/div/article/div[3]/section[1]/span[1]/button'
                 USERNAME_XPATH = '/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[1]/span/a'
-                username_text = (self.driver.find_element_by_xpath(USERNAME_XPATH)).get_attribute("innerHTML")
+                username_text = (self.driver.find_element_by_xpath(USERNAME_XPATH))
+                user_text = username_text.get_attribute("innerHTML")
                 likeButton = self.driver.find_element_by_xpath(LIKE_BUTTON)
                 followButton = self.driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[2]/button')
                     #checks to see if the follow button let's you hit follow
@@ -110,7 +111,7 @@ class InstagramBot:
 
                     # clicks on the right arrow to the right of the thumbnail to go to next picture
                 self.driver.find_element_by_link_text('Next').click()
-                sleep(randint(5, 10))
+                sleep(randint(4, 6))
 
 
 
@@ -152,7 +153,7 @@ class InstagramBot:
 
 
 
-Bot = InstagramBot('Your Username', 'Your Password')
+Bot = InstagramBot('yourusername', 'yourpassword')
 #run python3 -i main.py to open interactive controls where selenium web page stays open
 # and you can call your methods to test it
 #or can just run something like bot get_unfollowers() here
